@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iremide Aina — Biomedical &amp; Digital Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ECE8DE;
+    --paper-dark:#DFD9C8;
+    --ink:#1C2024;
+    --ink-soft:#54595E;
+    --line:#B7AF9C;
+    --blue:#33566F;
+    --brass:#93602B;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  a{color:var(--blue); text-decoration:none; border-bottom:1px solid currentColor;}
+  a:hover{color:var(--brass);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--blue); outline-offset:3px;}
+
+  h1,h2,h3{font-family:'Archivo', sans-serif; margin:0; letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  .wrap{max-width:960px; margin:0 auto; padding:0 32px;}
+  @media (max-width:600px){ .wrap{padding:0 20px;} }
+
+  /* ---- top bar ---- */
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:960px; margin:0 auto; padding:16px 32px;
+  }
+  @media (max-width:600px){ .topbar-inner{padding:14px 20px;} }
+  .mark{font-family:'Archivo', sans-serif; font-weight:800; font-size:1.05rem;}
+  .mark span{color:var(--blue);}
+  .toplinks{display:flex; gap:22px; font-family:'IBM Plex Mono', monospace; font-size:0.82rem;}
+  .toplinks a{border-bottom:none; color:var(--ink-soft); position:relative; padding-bottom:2px;}
+  .toplinks a:hover{color:var(--blue);}
+  @media (max-width:640px){ .toplinks{display:none;} }
+
+  /* ---- hero ---- */
+  .hero{
+    position:relative;
+    padding:72px 0 56px;
+    border-bottom:1px solid var(--line);
+  }
+  .reg{
+    position:absolute; width:14px; height:14px; opacity:0.55;
+  }
+  .reg::before, .reg::after{content:''; position:absolute; background:var(--ink-soft);}
+  .reg::before{width:14px; height:1px; top:6.5px; left:0;}
+  .reg::after{width:1px; height:14px; left:6.5px; top:0;}
+  .reg.tl{top:14px; left:32px;}
+  .reg.tr{top:14px; right:32px;}
+  @media (max-width:600px){ .reg{display:none;} }
+
+  .hero-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:36px; align-items:center;
+  }
+  @media (max-width:760px){ .hero-grid{grid-template-columns:1fr; gap:28px;} }
+
+  .hero h1{font-size:clamp(2.3rem, 5vw, 3.4rem); font-weight:800; line-height:1.04;}
+  .role{
+    margin-top:10px; font-size:1.15rem; color:var(--blue); font-weight:600;
+    font-family:'Archivo', sans-serif;
+  }
+  .contact-row{
+    margin-top:24px; display:flex; flex-wrap:wrap; gap:14px 22px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.85rem; color:var(--ink-soft);
+  }
+  .contact-row a{color:var(--ink-soft); border-bottom:1px solid var(--line);}
+  .contact-row a:hover{color:var(--blue); border-bottom-color:var(--blue);}
+
+  .schematic{width:100%; height:auto;}
+  .schematic path, .schematic circle, .schematic line{
+    stroke:var(--blue); fill:none; stroke-width:2;
+    stroke-dasharray:1000; stroke-dashoffset:1000;
+    animation:draw 1.8s ease forwards;
+  }
+  .schematic .dim{stroke:var(--ink-soft); stroke-width:1;}
+  .schematic .joint{fill:var(--paper); stroke:var(--ink); stroke-width:2;}
+  .schematic text{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; fill:var(--ink-soft);
+    opacity:0; animation:fadein 0.6s ease forwards; animation-delay:1.6s;
+  }
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @keyframes fadein{to{opacity:1;}}
+
+  /* ---- sections ---- */
+  section{padding:52px 0; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .sheet-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ink-soft);
+    margin-bottom:10px; display:flex; align-items:center; gap:8px;
+  }
+  .sheet-tag::before{content:''; width:22px; height:1px; background:var(--line);}
+  .section-title{font-size:1.6rem; font-weight:700; margin-bottom:20px;}
+
+  .lede{max-width:62ch; color:var(--ink-soft); font-size:1.02rem;}
+
+  /* education */
+  .edu-head{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; align-items:baseline;}
+  .edu-head h3{font-size:1.25rem; font-weight:700;}
+  .edu-date{font-family:'IBM Plex Mono', monospace; font-size:0.85rem; color:var(--blue);}
+  .edu-sub{color:var(--ink-soft); margin-top:4px;}
+  .course-grid{
+    margin-top:22px; display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr));
+    gap:1px; background:var(--line); border:1px solid var(--line);
+  }
+  .course-grid div{
+    background:var(--paper-dark); padding:10px 12px; font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem; color:var(--ink-soft);
+  }
+
+  /* experience timeline */
+  .timeline{position:relative; margin-top:8px; padding-left:26px; border-left:1px solid var(--line);}
+  .tl-item{position:relative; padding-bottom:38px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:''; position:absolute; left:-31px; top:4px; width:9px; height:9px;
+    border-radius:50%; background:var(--paper); border:2px solid var(--blue);
+  }
+  .tl-item h3{font-size:1.15rem; font-weight:700;}
+  .tl-org{color:var(--ink-soft); font-size:0.95rem; margin-top:2px;}
+  .tl-date{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--blue); margin-top:4px; display:block;
+  }
+  .tl-item ul{margin:14px 0 0; padding-left:20px; color:var(--ink-soft);}
+  .tl-item li{margin-bottom:8px; font-size:0.96rem;}
+  .tl-item li::marker{color:var(--line);}
+
+  /* projects */
+  .project-card{
+    border:1px solid var(--line); background:var(--paper-dark); padding:26px 28px;
+  }
+  .project-card h3{font-size:1.2rem; font-weight:700;}
+  .project-meta{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--ink-soft); margin-top:6px;
+  }
+  .project-card ul{margin:16px 0 0; padding-left:20px; color:var(--ink-soft);}
+  .project-card li{margin-bottom:8px; font-size:0.96rem;}
+
+  /* skills */
+  .skills-table{width:100%; border-collapse:collapse; margin-top:6px;}
+  .skills-table tr{border-bottom:1px solid var(--line);}
+  .skills-table tr:first-child{border-top:1px solid var(--line);}
+  .skills-table td{padding:14px 10px; vertical-align:top;}
+  .skills-table td:first-child{
+    width:220px; font-family:'IBM Plex Mono', monospace; font-size:0.82rem; color:var(--blue); font-weight:500;
+  }
+  .skills-table td:last-child{color:var(--ink-soft);}
+  @media (max-width:600px){
+    .skills-table td:first-child{width:120px; font-size:0.74rem;}
+  }
+
+  /* footer */
+  footer{padding:44px 0 60px;}
+  .foot-grid{display:flex; flex-wrap:wrap; justify-content:space-between; gap:24px;}
+  .foot-links{display:flex; flex-direction:column; gap:8px; font-size:0.95rem;}
+  .elig{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--ink-soft);
+    max-width:320px; line-height:1.7;
+  }
+  .elig .dot{color:var(--blue);}
+  .sheet-footer{
+    margin-top:40px; padding-top:16px; border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ink-soft);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="mark">Iremide <span>Aina</span></div>
+    <nav class="toplinks">
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero wrap">
+  <span class="reg tl"></span>
+  <span class="reg tr"></span>
+  <div class="hero-grid">
+    <div>
+      <h1>Iremide Aina</h1>
+      <div class="role">Biomedical &amp; Digital Engineering Student</div>
+      <p class="lede" style="margin-top:18px;">
+        Designs and tests mechanical prototypes for biomedical applications — from
+        3D-printed dermal scan fixtures to soft-robotic arms — carrying each idea from
+        CAD model through fabrication to measured, working part.
+      </p>
+      <div class="contact-row">
+        <a href="mailto:ireloisaina@gmail.com">ireloisaina@gmail.com</a>
+        <span>587-284-5784</span>
+        <a href="https://linkedin.com/in/iremide-aina">linkedin.com/in/iremide-aina</a>
+      </div>
+    </div>
+    <div>
+      <svg class="schematic" viewBox="0 0 420 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- base -->
+        <path d="M 60 300 L 140 300 L 130 270 L 70 270 Z" />
+        <circle class="joint" cx="100" cy="255" r="9" />
+        <!-- link 1 -->
+        <path d="M 100 255 L 190 175" />
+        <circle class="joint" cx="190" cy="175" r="8" />
+        <!-- link 2 -->
+        <path d="M 190 175 L 300 140" />
+        <circle class="joint" cx="300" cy="140" r="7" />
+        <!-- end effector -->
+        <path d="M 300 140 L 340 118 M 300 140 L 335 158" />
+        <!-- dimension line -->
+        <line class="dim" x1="100" y1="285" x2="300" y2="285" />
+        <line class="dim" x1="100" y1="278" x2="100" y2="292" />
+        <line class="dim" x1="300" y1="278" x2="300" y2="292" />
+        <text x="175" y="305">reach — 128 mm</text>
+        <!-- angle arc -->
+        <path class="dim" d="M 160 175 A 30 30 0 0 1 190 145" />
+        <text x="150" y="130">θ 42°</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section id="education" class="wrap">
+  <div class="sheet-tag">sheet 1 / 4 — education</div>
+  <h2 class="section-title">Education</h2>
+  <div class="edu-head">
+    <h3>Bachelor of Science, Biomedical Engineering</h3>
+    <span class="edu-date">Expected April 2027</span>
+  </div>
+  <div class="edu-sub">University of Calgary, Calgary, AB</div>
+  <div class="course-grid">
+    <div>Fluid Mechanics</div>
+    <div>Mechanical System Design</div>
+    <div>Thermodynamics</div>
+    <div>Medical Imaging Technologies</div>
+    <div>Tissue Engineering</div>
+    <div>Biomaterials Science</div>
+    <div>Biology</div>
+    <div>Microfluidics</div>
+    <div>3D Bioprinting</div>
+    <div>Computational Fluid Dynamics</div>
+    <div>Material Mechanics</div>
+    <div>Mechanical Testing of Biomaterials</div>
+  </div>
+</section>
+
+<section id="experience" class="wrap">
+  <div class="sheet-tag">sheet 2 / 4 — experience</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <h3>NSERC Award Student Researcher</h3>
+      <div class="tl-org">University of Calgary</div>
+      <span class="tl-date">May 2024 – Sept 2024</span>
+      <ul>
+        <li>Led the design and testing of 3D-printed prototype models for dermal applications, measuring surface irregularities with an Artec Leo 3D Scanner.</li>
+        <li>Developed and analyzed prototypes for scar-assessment research, refining mechanical design for surface integration and component testing.</li>
+        <li>Worked with academic partners to improve prototype design and integrate imaging analysis into the diagnostics workflow.</li>
+        <li>Built detailed CAD models in SolidWorks, MeshLab, MATLAB, and Fusion 360, optimizing each design for manufacturability and ease of assembly.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>Founder &amp; President, Bio Robotics Club</h3>
+      <div class="tl-org">University of Calgary</div>
+      <span class="tl-date">Sept 2023 – Present</span>
+      <ul>
+        <li>Spearheaded the design and fabrication of robotic components, including fluidic control systems and mechanical joints, using rapid prototyping and 3D printing.</li>
+        <li>Directed CAD modelling and design refinement in SolidWorks and Autodesk Inventor, ensuring functional performance under dynamic conditions.</li>
+        <li>Led testing and imaging analysis of prototype models, feeding results back into design adjustments.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="wrap">
+  <div class="sheet-tag">sheet 3 / 4 — projects</div>
+  <h2 class="section-title">Projects</h2>
+  <div class="project-card">
+    <h3>Design of a Dynamic Robotic Arm for Soft Robotics Applications</h3>
+    <div class="project-meta">Bio Robotics Club · Sept 2023 – Dec 2023</div>
+    <ul>
+      <li>Designed and modelled a dynamic robotic arm in Fusion 360 and SolidWorks, optimizing for motion efficiency and load-bearing capacity.</li>
+      <li>Integrated fluid control mechanisms for precise actuation and validated the assembly through 3D-printed prototypes.</li>
+      <li>Ran stress analysis and component optimization to ensure durability and smooth operation during movement.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="skills" class="wrap">
+  <div class="sheet-tag">sheet 4 / 4 — skills</div>
+  <h2 class="section-title">Technical Skills</h2>
+  <table class="skills-table">
+    <tr>
+      <td>CAD software</td>
+      <td>SolidWorks, AutoCAD, Fusion 360, Autodesk Inventor, Autodesk REVIT (7+ years)</td>
+    </tr>
+    <tr>
+      <td>Prototyping &amp; testing</td>
+      <td>3D printing, PCB design, rapid prototyping</td>
+    </tr>
+    <tr>
+      <td>Engineering analysis</td>
+      <td>Finite element analysis (FEA), stress analysis, thermodynamics, imaging analysis</td>
+    </tr>
+    <tr>
+      <td>Programming &amp; tools</td>
+      <td>Python, MATLAB, Artec Leo 3D Scanner, MeshLab, Artec Studio</td>
+    </tr>
+  </table>
+</section>
+
+<footer id="contact" class="wrap">
+  <div class="foot-grid">
+    <div class="foot-links">
+      <h3 style="font-size:1.1rem; margin-bottom:6px;">Get in touch</h3>
+      <a href="mailto:ireloisaina@gmail.com">ireloisaina@gmail.com</a>
+      <a href="https://linkedin.com/in/iremide-aina">linkedin.com/in/iremide-aina</a>
+      <span style="color:var(--ink-soft); font-size:0.95rem;">587-284-5784</span>
+    </div>
+    <div class="elig">
+      <span class="dot">●</span> Eligible to work in Canada<br>
+      <span class="dot">●</span> Available for a full-time internship beginning May 2026
+    </div>
+  </div>
+  <div class="sheet-footer">
+    <span>Iremide Aina — Biomedical &amp; Digital Engineering</span>
+    <span>University of Calgary</span>
+  </div>
+</footer>
+
+</body>
+</html>
